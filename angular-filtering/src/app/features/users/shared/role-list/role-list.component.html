@@ -1,0 +1,19 @@
+<ng-container *ngIf="this.filteredRoleItems.length > 0">
+  <hr>
+
+  <p>{{title}}</p>
+
+  <ul>
+    <li *ngFor="let item of filteredRoleItems; trackBy:trackName">
+      <ng-container *ngIf="isReadOnlyMode()">
+        {{item.name}}
+      </ng-container>
+      <ng-container *ngIf="!isReadOnlyMode()">
+        <label>
+          <input [(ngModel)]="item.selected" type="checkbox" />
+          {{item.name}}
+        </label>
+      </ng-container>
+    </li>
+  </ul>
+</ng-container>

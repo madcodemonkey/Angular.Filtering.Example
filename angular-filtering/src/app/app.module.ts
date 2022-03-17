@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +11,7 @@ import { ActivityComponent } from './features/activity/activity.component';
 import { UsersComponent } from './features/users/users.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { LibraryComponent } from './features/library/library.component';
+import { RoleListComponent } from './features/users/shared/role-list/role-list.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,11 @@ import { LibraryComponent } from './features/library/library.component';
     ActivityComponent,
     UsersComponent,
     DashboardComponent,
-    LibraryComponent
+    LibraryComponent,
+    RoleListComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

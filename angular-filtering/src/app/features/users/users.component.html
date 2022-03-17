@@ -1,1 +1,23 @@
-<p>users works!</p>
+
+<div class="row">
+  <div class="col-1">Search</div>
+  <div class="col-11"><input #searchBox id="search-box" (input)="search(searchBox.value)" /></div>
+</div>
+<div class="row mt-1">
+  <div class="col-12"><button (click)="changeList()">Change the list</button></div>
+</div>
+<div class="row mt-1">
+  <div class="col-6"><Button (click)="toggleMode()">Toggle Mode</Button></div>
+  <div class="col-6">Mode: {{getMode()}}</div>
+</div>
+<div class="row mt-1">
+  <button (click)="countSelectedItems()">Count selected items</button>
+</div>
+
+
+
+<app-role-list [mode]="mode" title="Regions" [filter]="searchFilter" [roleItems]="regions"></app-role-list>
+<app-role-list [mode]="mode" title="Jurisdictions" [filter]="searchFilter" [roleItems]="jurisdictions"></app-role-list>
+<app-role-list [mode]="mode" title="Services" [filter]="searchFilter" [roleItems]="services"></app-role-list>
+<app-role-list [mode]="mode" title="Entities" [filter]="searchFilter" [roleItems]="entities"></app-role-list>
+<app-role-list [mode]="mode" title="Segments" [filter]="searchFilter" [roleItems]="segments"></app-role-list>
