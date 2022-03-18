@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject  } from 'rxjs';
+import { Subject } from 'rxjs';
 import { UserRoleItem } from './shared/models/user-role-item';
 import { UserRoleListMode } from './shared/models/UserRoleListMode';
-import {  debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -18,14 +18,9 @@ export class UsersComponent implements OnInit {
   version = 0;
   searchFilter: string = "";
   mode: UserRoleListMode = UserRoleListMode.Read;
+  selectedCount: number = 0;
 
   private searchTerms = new Subject<string>();
-
-  // Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
-  }
-
 
   constructor() { }
 
@@ -43,9 +38,22 @@ export class UsersComponent implements OnInit {
     ).subscribe(s => this.searchChange(s));
   }
 
-  searchChange(term: string) : void {
+  /**
+   * Push a search term into the observable stream.
+   * @param term The text typed by the user.
+   */
+  search(term: string): void {
+    this.searchTerms.next(term);
+  }
+
+  /**
+   * When the user types text, it is shoved into the Subject behavior named, searchTerms, and we
+   * subscribe to those changes in ngOnInit and they call this function to change the searchFilter,
+   * which is then passed to all the RoleListComponent
+   * @param term search text.
+   */
+  searchChange(term: string): void {
     this.searchFilter = term;
-    console.log(`Search term: ${term}`);
   }
 
   changeList() {
@@ -79,9 +87,17 @@ export class UsersComponent implements OnInit {
 
     this.services = [
       { id: 1, name: 'Belgium / Indirect Foo', selected: false },
-      { id: 2, name: 'France / Entity ABC', selected: false },
-      { id: 3, name: 'France / Entity 123', selected: false },
-      { id: 4, name: 'Netherlands / Stuff', selected: false },
+      { id: 2, name: 'Belgium / Stuff', selected: false },
+      { id: 3, name: 'France / Entity ABC', selected: false },
+      { id: 4, name: 'France / Entity 123', selected: false },
+      { id: 5, name: 'Netherlands / Stuff', selected: false },
+      { id: 6, name: 'Mexico / Stuff', selected: false },
+      { id: 7, name: 'Peru / Stuff', selected: false },
+      { id: 8, name: 'Spain / Stuff', selected: false },
+      { id: 9, name: 'Panama / Stuff', selected: false },
+      { id: 10, name: 'Columbia / Stuff', selected: false },
+      { id: 11, name: 'Canada / Stuff', selected: false },
+      { id: 12, name: 'Norway / Stuff', selected: false },
     ];
 
     this.addVersion(this.services, version);
@@ -101,11 +117,11 @@ export class UsersComponent implements OnInit {
     else this.mode = UserRoleListMode.Read;
   }
 
-  getMode() :string{
+  getMode(): string {
     return this.mode === UserRoleListMode.Read ? "Read" : "Write"
   }
 
-  countSelectedItems() :void{
+  countSelectedItems(): void {
     let count = 0;
     count += this.regions.filter(w => w.selected === true).length;
     count += this.jurisdictions.filter(w => w.selected === true).length;
@@ -113,8 +129,7 @@ export class UsersComponent implements OnInit {
     count += this.entities.filter(w => w.selected === true).length;
     count += this.segments.filter(w => w.selected === true).length;
 
+    this.selectedCount = count;
     console.log(`Count of selected items = ${count}`);
-
-
   }
 }

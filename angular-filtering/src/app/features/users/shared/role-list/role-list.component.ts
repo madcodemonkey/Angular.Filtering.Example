@@ -23,7 +23,7 @@ export class RoleListComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.resetMode();
+    this.resetVisibilityBaseOnTheMode();
 
     this.theTrackName = this.title.replace(/\s/g, '');
     if (this.theTrackName === null || this.theTrackName === undefined || this.theTrackName.length === 0) {
@@ -32,26 +32,25 @@ export class RoleListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.filter) {
+    if (changes.filter || changes.roleItems) {
       this.filterItems();
-    }
-    else if (changes.roleItems) {
-      console.log("role items changed.")
-      this.filterItems();
-    }
-    else if (changes.title) {
-      console.log('Title changed')
     }
     else if (changes.mode) {
-      this.resetMode();
+      this.resetVisibilityBaseOnTheMode();
     }
   }
-  
-  resetMode() {
+
+  /**
+   * Resets the visibility flags and visiblity limit based on the mode.
+   */
+  resetVisibilityBaseOnTheMode() {
     this.showAll = this.mode === UserRoleListMode.Write;
     this.visibleLimit = this.showAll ? this.maxLimit : this.defaultLimit;
   }
 
+  /**
+   * Filters the items based on the filter text.
+   */
   filterItems(): void {
     if (this.filter === "" || this.filter === undefined) {
       this.filteredRoleItems = this.roleItems;
@@ -64,14 +63,27 @@ export class RoleListComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Inidicates if the mod is read only.  If so, return true; otherwise, false.
+   * @returns true or false based on the mode.
+   */
   isReadOnlyMode(): boolean {
     return this.mode === UserRoleListMode.Read;
   }
 
+  /**
+   * Used to set the trackname on the items displayed in the for loop.
+   * @param index current index.
+   * @param userRole user item.
+   * @returns Text to identify an item being displayed.
+   */
   trackName(index: number, userRole: UserRoleItem): string {
     return '${this.theTrackName}${userRole.id}';
   }
 
+  /**
+   * Toggles the visibility of items.
+   */
   toggleVisibleLimit(): void {
     this.showAll = !this.showAll;
     this.visibleLimit = this.showAll ? this.maxLimit : this.defaultLimit;
