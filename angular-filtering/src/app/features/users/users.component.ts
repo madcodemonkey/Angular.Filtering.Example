@@ -66,6 +66,13 @@ export class UsersComponent implements OnInit {
       { id: 2, name: 'France', selected: false },
       { id: 3, name: 'Norway', selected: false },
       { id: 4, name: 'Netherlands', selected: false },
+      { id: 5, name: 'Canada', selected: false },
+      { id: 6, name: 'Mexico', selected: false },
+      { id: 7, name: 'Columbia', selected: false },
+      { id: 8, name: 'Peru', selected: false },
+      { id: 9, name: 'Brazil', selected: false },
+      { id: 10, name: 'Panama', selected: false },
+      { id: 11, name: 'Spain', selected: false },
     ];
 
     this.addVersion(this.jurisdictions, version);

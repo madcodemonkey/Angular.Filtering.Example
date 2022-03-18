@@ -14,18 +14,21 @@ export class RoleListComponent implements OnInit, OnChanges {
   @Input() mode: UserRoleListMode = UserRoleListMode.Read;
   theTrackName = 'name';
   filteredRoleItems: UserRoleItem[] = [];
+  visibleLimit = 5;
+  defaultLimit = 5;  // starting value
+  maxLimit = 100000; // Everything is visible
+
+  showAll: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.resetMode();
+
     this.theTrackName = this.title.replace(/\s/g, '');
-    if (this.theTrackName === null || this.theTrackName === undefined || this.theTrackName.length === 0){
+    if (this.theTrackName === null || this.theTrackName === undefined || this.theTrackName.length === 0) {
       this.theTrackName = 'name';
     }
-  }
-
-  trackName(index: number, userRole: UserRoleItem): string {
-    return '${this.theTrackName}${userRole.id}';
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -39,6 +42,14 @@ export class RoleListComponent implements OnInit, OnChanges {
     else if (changes.title) {
       console.log('Title changed')
     }
+    else if (changes.mode) {
+      this.resetMode();
+    }
+  }
+  
+  resetMode() {
+    this.showAll = this.mode === UserRoleListMode.Write;
+    this.visibleLimit = this.showAll ? this.maxLimit : this.defaultLimit;
   }
 
   filterItems(): void {
@@ -53,7 +64,17 @@ export class RoleListComponent implements OnInit, OnChanges {
     }
   }
 
-  isReadOnlyMode() :boolean{
+  isReadOnlyMode(): boolean {
     return this.mode === UserRoleListMode.Read;
   }
+
+  trackName(index: number, userRole: UserRoleItem): string {
+    return '${this.theTrackName}${userRole.id}';
+  }
+
+  toggleVisibleLimit(): void {
+    this.showAll = !this.showAll;
+    this.visibleLimit = this.showAll ? this.maxLimit : this.defaultLimit;
+  }
+
 }

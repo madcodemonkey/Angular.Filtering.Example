@@ -1,19 +1,32 @@
 <ng-container *ngIf="this.filteredRoleItems.length > 0">
   <hr>
 
-  <p>{{title}}</p>
+  <div class="row">
+    <div class="col-6">{{title}}</div>
+    <div class="col-6">
+      <ng-container *ngIf="showAll">
+        <button type="button" class="btn btn-link" (click)="toggleVisibleLimit()">Show less</button>
+       </ng-container>
+       <ng-container *ngIf="this.filteredRoleItems.length > this.visibleLimit">
+        <button type="button" class="btn btn-link" (click)="toggleVisibleLimit()">Show all</button>
+       </ng-container>
+       <span class="badge badge-info">{{this.filteredRoleItems.length}}</span>
+    </div>
+  </div>
 
   <ul>
-    <li *ngFor="let item of filteredRoleItems; trackBy:trackName">
-      <ng-container *ngIf="isReadOnlyMode()">
-        {{item.name}}
-      </ng-container>
-      <ng-container *ngIf="!isReadOnlyMode()">
-        <label>
-          <input [(ngModel)]="item.selected" type="checkbox" />
+    <ng-container *ngFor="let item of filteredRoleItems; trackBy:trackName; let i=index">
+      <li *ngIf="i < visibleLimit">
+        <ng-container *ngIf="isReadOnlyMode()">
           {{item.name}}
-        </label>
-      </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!isReadOnlyMode()">
+          <label>
+            <input [(ngModel)]="item.selected" type="checkbox" />
+            {{item.name}}
+          </label>
+        </ng-container>
     </li>
-  </ul>
+  </ng-container>
+</ul>
 </ng-container>
