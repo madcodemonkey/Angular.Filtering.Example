@@ -9,9 +9,8 @@ import { NavBarComponent } from './core/nav-bar/nav-bar.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ActivityComponent } from './features/activity/activity.component';
 import { UsersComponent } from './features/users/users.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { LibraryComponent } from './features/library/library.component';
 import { RoleListComponent } from './features/users/shared/role-list/role-list.component';
+import { InputDebouncedComponent } from './features/shared/input-debounced/input-debounced.component';
 
 @NgModule({
   declarations: [
@@ -19,9 +18,8 @@ import { RoleListComponent } from './features/users/shared/role-list/role-list.c
     NavBarComponent,
     ActivityComponent,
     UsersComponent,
-    DashboardComponent,
-    LibraryComponent,
-    RoleListComponent
+    RoleListComponent,
+    InputDebouncedComponent
   ],
   imports: [
     FormsModule,

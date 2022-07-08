@@ -1,7 +1,8 @@
 
 <div class="row">
   <div class="col-1">Search</div>
-  <div class="col-11"><input #searchBox id="search-box" (input)="search(searchBox.value)" /></div>
+  <div class="col-11"><app-input-debounced newId="search-box" [debounceInterval]="300" (onChanged)="searchChange($event)" ></app-input-debounced> </div>
+  <!-- <div class="col-11"><input #searchBox id="search-box" (input)="search(searchBox.value)" /> </div> -->
 </div>
 <div class="row mt-1">
   <div class="col-12"><button (click)="changeList()">Change the list</button></div>
